@@ -31,7 +31,6 @@ class ActivitiesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Activities> list(core.String userKey, core.String applicationName, {core.String actorIpAddress, core.String endTime, core.String eventName, core.String filters, core.int maxResults, core.String pageToken, core.String startTime, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "activity/users/{userKey}/applications/{applicationName}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -57,16 +56,13 @@ class ActivitiesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Activities.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Activities.fromJson(data));
   }
 }
 
@@ -87,7 +83,6 @@ class CustomerUsageReportsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<UsageReports> get(core.String date, {core.String pageToken, core.String parameters, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "usage/dates/{date}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -106,16 +101,13 @@ class CustomerUsageReportsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new UsageReports.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new UsageReports.fromJson(data));
   }
 }
 
@@ -143,7 +135,6 @@ class UserUsageReportResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<UsageReports> get(core.String userKey, core.String date, {core.String filters, core.int maxResults, core.String pageToken, core.String parameters, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "usage/users/{userKey}/dates/{date}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -166,16 +157,13 @@ class UserUsageReportResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new UsageReports.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new UsageReports.fromJson(data));
   }
 }
 

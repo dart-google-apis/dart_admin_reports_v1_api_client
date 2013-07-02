@@ -1,6 +1,6 @@
 part of admin_reports_v1_api_client;
 
-/** JSON template for a collection of activites. Author: prakhar@google.com (Prakhar Jain) */
+/** JSON template for a collection of activites. */
 class Activities {
 
   /** Each record in read response. */
@@ -53,7 +53,7 @@ class Activities {
 
 }
 
-/** JSON template for the activity resource. Author: prakhar@google.com (Prakhar Jain) */
+/** JSON template for the activity resource. */
 class Activity {
 
   /** User doing the action. */
@@ -160,7 +160,11 @@ class ActivityId {
       time = json["time"];
     }
     if (json.containsKey("uniqueQualifier")) {
-      uniqueQualifier = json["uniqueQualifier"];
+      if(json["uniqueQualifier"] is core.String){
+        uniqueQualifier = core.int.parse(json["uniqueQualifier"]);
+      }else{
+        uniqueQualifier = json["uniqueQualifier"];
+      }
     }
   }
 
@@ -261,7 +265,11 @@ class ActivityEventsParameters {
       boolValue = json["boolValue"];
     }
     if (json.containsKey("intValue")) {
-      intValue = json["intValue"];
+      if(json["intValue"] is core.String){
+        intValue = core.int.parse(json["intValue"]);
+      }else{
+        intValue = json["intValue"];
+      }
     }
     if (json.containsKey("name")) {
       name = json["name"];
@@ -352,7 +360,7 @@ class ActivityActor {
 
 }
 
-/** JSON template for a usage report. Author: prakhar@google.com (Prakhar Jain) */
+/** JSON template for a usage report. */
 class UsageReport {
 
   /** The date to which the record belongs. */
@@ -496,7 +504,11 @@ class UsageReportParameters {
       datetimeValue = json["datetimeValue"];
     }
     if (json.containsKey("intValue")) {
-      intValue = json["intValue"];
+      if(json["intValue"] is core.String){
+        intValue = core.int.parse(json["intValue"]);
+      }else{
+        intValue = json["intValue"];
+      }
     }
     if (json.containsKey("name")) {
       name = json["name"];
@@ -534,7 +546,7 @@ class UsageReportParameters {
 
 }
 
-/** JSON template for a collection of usage reports. Author: prakhar@google.com (Prakhar Jain) */
+/** JSON template for a collection of usage reports. */
 class UsageReports {
 
   /** The kind of object. */
