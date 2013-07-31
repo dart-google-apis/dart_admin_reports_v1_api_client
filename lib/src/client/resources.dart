@@ -1,9 +1,11 @@
-part of admin_reports_v1_api_client;
+part of admin_reports_v1_api;
 
-class ActivitiesResource_ extends Resource {
+class ActivitiesResource_ {
 
-  ActivitiesResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  ActivitiesResource_(Client client) :
+      _client = client;
 
   /**
    * Retrieves a list of activities for a specific customer and application.
@@ -66,10 +68,12 @@ class ActivitiesResource_ extends Resource {
   }
 }
 
-class CustomerUsageReportsResource_ extends Resource {
+class CustomerUsageReportsResource_ {
 
-  CustomerUsageReportsResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  CustomerUsageReportsResource_(Client client) :
+      _client = client;
 
   /**
    * Retrieves a report which is a collection of properties / statistics for a specific customer.
@@ -111,10 +115,12 @@ class CustomerUsageReportsResource_ extends Resource {
   }
 }
 
-class UserUsageReportResource_ extends Resource {
+class UserUsageReportResource_ {
 
-  UserUsageReportResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  UserUsageReportResource_(Client client) :
+      _client = client;
 
   /**
    * Retrieves a report which is a collection of properties / statistics for a set of users.

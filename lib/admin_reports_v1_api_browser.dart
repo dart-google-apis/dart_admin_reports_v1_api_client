@@ -1,14 +1,20 @@
-library admin_reports_v1_api_browser;
+library admin_reports_v1_api.browser;
 
-import "admin_reports_v1_api_client.dart";
-export "admin_reports_v1_api_client.dart";
-
-import "dart:core" as core;
-import "dart:html" as html;
-import "dart:async" as async;
-import "dart:json" as JSON;
-import "package:js/js.dart" as js;
 import "package:google_oauth2_client/google_oauth2_browser.dart" as oauth;
 
-part "src/browser/browser_client.dart";
-part "src/browser/admin.dart";
+import 'package:google_admin_reports_v1_api/src/cloud_api_browser.dart';
+import "package:google_admin_reports_v1_api/admin_reports_v1_api_client.dart";
+
+/** Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users. */
+class Admin extends Client with BrowserClient {
+
+  /** OAuth Scope2: View audit reports of Google Apps for your domain */
+  static const String ADMIN_REPORTS_AUDIT_READONLY_SCOPE = "https://www.googleapis.com/auth/admin.reports.audit.readonly";
+
+  /** OAuth Scope2: View usage reports of Google Apps for your domain */
+  static const String ADMIN_REPORTS_USAGE_READONLY_SCOPE = "https://www.googleapis.com/auth/admin.reports.usage.readonly";
+
+  final oauth.OAuth2 auth;
+
+  Admin([oauth.OAuth2 this.auth]);
+}

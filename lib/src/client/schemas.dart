@@ -1,4 +1,4 @@
-part of admin_reports_v1_api_client;
+part of admin_reports_v1_api;
 
 /** JSON template for a collection of activites. */
 class Activities {
@@ -15,10 +15,7 @@ class Activities {
   /** Create new Activities from JSON data */
   Activities.fromJson(core.Map json) {
     if (json.containsKey("items")) {
-      items = [];
-      json["items"].forEach((item) {
-        items.add(new Activity.fromJson(item));
-      });
+      items = json["items"].map((itemsItem) => new Activity.fromJson(itemsItem)).toList();
     }
     if (json.containsKey("kind")) {
       kind = json["kind"];
@@ -33,10 +30,7 @@ class Activities {
     var output = new core.Map();
 
     if (items != null) {
-      output["items"] = new core.List();
-      items.forEach((item) {
-        output["items"].add(item.toJson());
-      });
+      output["items"] = items.map((itemsItem) => itemsItem.toJson()).toList();
     }
     if (kind != null) {
       output["kind"] = kind;
@@ -80,10 +74,7 @@ class Activity {
       actor = new ActivityActor.fromJson(json["actor"]);
     }
     if (json.containsKey("events")) {
-      events = [];
-      json["events"].forEach((item) {
-        events.add(new ActivityEvents.fromJson(item));
-      });
+      events = json["events"].map((eventsItem) => new ActivityEvents.fromJson(eventsItem)).toList();
     }
     if (json.containsKey("id")) {
       id = new ActivityId.fromJson(json["id"]);
@@ -107,10 +98,7 @@ class Activity {
       output["actor"] = actor.toJson();
     }
     if (events != null) {
-      output["events"] = new core.List();
-      events.forEach((item) {
-        output["events"].add(item.toJson());
-      });
+      output["events"] = events.map((eventsItem) => eventsItem.toJson()).toList();
     }
     if (id != null) {
       output["id"] = id.toJson();
@@ -129,177 +117,6 @@ class Activity {
   }
 
   /** Return String representation of Activity */
-  core.String toString() => JSON.stringify(this.toJson());
-
-}
-
-/** Unique identifier for each activity record. */
-class ActivityId {
-
-  /** Application name to which the event belongs. */
-  core.String applicationName;
-
-  /** Obfuscated customer ID of the source customer. */
-  core.String customerId;
-
-  /** Time of occurrence of the activity. */
-  core.String time;
-
-  /** Unique qualifier if multiple events have the same time. */
-  core.int uniqueQualifier;
-
-  /** Create new ActivityId from JSON data */
-  ActivityId.fromJson(core.Map json) {
-    if (json.containsKey("applicationName")) {
-      applicationName = json["applicationName"];
-    }
-    if (json.containsKey("customerId")) {
-      customerId = json["customerId"];
-    }
-    if (json.containsKey("time")) {
-      time = json["time"];
-    }
-    if (json.containsKey("uniqueQualifier")) {
-      if(json["uniqueQualifier"] is core.String){
-        uniqueQualifier = core.int.parse(json["uniqueQualifier"]);
-      }else{
-        uniqueQualifier = json["uniqueQualifier"];
-      }
-    }
-  }
-
-  /** Create JSON Object for ActivityId */
-  core.Map toJson() {
-    var output = new core.Map();
-
-    if (applicationName != null) {
-      output["applicationName"] = applicationName;
-    }
-    if (customerId != null) {
-      output["customerId"] = customerId;
-    }
-    if (time != null) {
-      output["time"] = time;
-    }
-    if (uniqueQualifier != null) {
-      output["uniqueQualifier"] = uniqueQualifier;
-    }
-
-    return output;
-  }
-
-  /** Return String representation of ActivityId */
-  core.String toString() => JSON.stringify(this.toJson());
-
-}
-
-class ActivityEvents {
-
-  /** Name of event. */
-  core.String name;
-
-  /** Parameter value pairs for various applications. */
-  core.List<ActivityEventsParameters> parameters;
-
-  /** Type of event. */
-  core.String type;
-
-  /** Create new ActivityEvents from JSON data */
-  ActivityEvents.fromJson(core.Map json) {
-    if (json.containsKey("name")) {
-      name = json["name"];
-    }
-    if (json.containsKey("parameters")) {
-      parameters = [];
-      json["parameters"].forEach((item) {
-        parameters.add(new ActivityEventsParameters.fromJson(item));
-      });
-    }
-    if (json.containsKey("type")) {
-      type = json["type"];
-    }
-  }
-
-  /** Create JSON Object for ActivityEvents */
-  core.Map toJson() {
-    var output = new core.Map();
-
-    if (name != null) {
-      output["name"] = name;
-    }
-    if (parameters != null) {
-      output["parameters"] = new core.List();
-      parameters.forEach((item) {
-        output["parameters"].add(item.toJson());
-      });
-    }
-    if (type != null) {
-      output["type"] = type;
-    }
-
-    return output;
-  }
-
-  /** Return String representation of ActivityEvents */
-  core.String toString() => JSON.stringify(this.toJson());
-
-}
-
-class ActivityEventsParameters {
-
-  /** Boolean value of the parameter. */
-  core.bool boolValue;
-
-  /** Integral value of the parameter. */
-  core.int intValue;
-
-  /** The name of the parameter. */
-  core.String name;
-
-  /** String value of the parameter. */
-  core.String value;
-
-  /** Create new ActivityEventsParameters from JSON data */
-  ActivityEventsParameters.fromJson(core.Map json) {
-    if (json.containsKey("boolValue")) {
-      boolValue = json["boolValue"];
-    }
-    if (json.containsKey("intValue")) {
-      if(json["intValue"] is core.String){
-        intValue = core.int.parse(json["intValue"]);
-      }else{
-        intValue = json["intValue"];
-      }
-    }
-    if (json.containsKey("name")) {
-      name = json["name"];
-    }
-    if (json.containsKey("value")) {
-      value = json["value"];
-    }
-  }
-
-  /** Create JSON Object for ActivityEventsParameters */
-  core.Map toJson() {
-    var output = new core.Map();
-
-    if (boolValue != null) {
-      output["boolValue"] = boolValue;
-    }
-    if (intValue != null) {
-      output["intValue"] = intValue;
-    }
-    if (name != null) {
-      output["name"] = name;
-    }
-    if (value != null) {
-      output["value"] = value;
-    }
-
-    return output;
-  }
-
-  /** Return String representation of ActivityEventsParameters */
   core.String toString() => JSON.stringify(this.toJson());
 
 }
@@ -360,6 +177,163 @@ class ActivityActor {
 
 }
 
+class ActivityEvents {
+
+  /** Name of event. */
+  core.String name;
+
+  /** Parameter value pairs for various applications. */
+  core.List<ActivityEventsParameters> parameters;
+
+  /** Type of event. */
+  core.String type;
+
+  /** Create new ActivityEvents from JSON data */
+  ActivityEvents.fromJson(core.Map json) {
+    if (json.containsKey("name")) {
+      name = json["name"];
+    }
+    if (json.containsKey("parameters")) {
+      parameters = json["parameters"].map((parametersItem) => new ActivityEventsParameters.fromJson(parametersItem)).toList();
+    }
+    if (json.containsKey("type")) {
+      type = json["type"];
+    }
+  }
+
+  /** Create JSON Object for ActivityEvents */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (name != null) {
+      output["name"] = name;
+    }
+    if (parameters != null) {
+      output["parameters"] = parameters.map((parametersItem) => parametersItem.toJson()).toList();
+    }
+    if (type != null) {
+      output["type"] = type;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of ActivityEvents */
+  core.String toString() => JSON.stringify(this.toJson());
+
+}
+
+class ActivityEventsParameters {
+
+  /** Boolean value of the parameter. */
+  core.bool boolValue;
+
+  /** Integral value of the parameter. */
+  core.int intValue;
+
+  /** The name of the parameter. */
+  core.String name;
+
+  /** String value of the parameter. */
+  core.String value;
+
+  /** Create new ActivityEventsParameters from JSON data */
+  ActivityEventsParameters.fromJson(core.Map json) {
+    if (json.containsKey("boolValue")) {
+      boolValue = json["boolValue"];
+    }
+    if (json.containsKey("intValue")) {
+      intValue = (json["intValue"] is core.String) ? core.int.parse(json["intValue"]) : json["intValue"];
+    }
+    if (json.containsKey("name")) {
+      name = json["name"];
+    }
+    if (json.containsKey("value")) {
+      value = json["value"];
+    }
+  }
+
+  /** Create JSON Object for ActivityEventsParameters */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (boolValue != null) {
+      output["boolValue"] = boolValue;
+    }
+    if (intValue != null) {
+      output["intValue"] = intValue;
+    }
+    if (name != null) {
+      output["name"] = name;
+    }
+    if (value != null) {
+      output["value"] = value;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of ActivityEventsParameters */
+  core.String toString() => JSON.stringify(this.toJson());
+
+}
+
+/** Unique identifier for each activity record. */
+class ActivityId {
+
+  /** Application name to which the event belongs. */
+  core.String applicationName;
+
+  /** Obfuscated customer ID of the source customer. */
+  core.String customerId;
+
+  /** Time of occurrence of the activity. */
+  core.String time;
+
+  /** Unique qualifier if multiple events have the same time. */
+  core.int uniqueQualifier;
+
+  /** Create new ActivityId from JSON data */
+  ActivityId.fromJson(core.Map json) {
+    if (json.containsKey("applicationName")) {
+      applicationName = json["applicationName"];
+    }
+    if (json.containsKey("customerId")) {
+      customerId = json["customerId"];
+    }
+    if (json.containsKey("time")) {
+      time = json["time"];
+    }
+    if (json.containsKey("uniqueQualifier")) {
+      uniqueQualifier = (json["uniqueQualifier"] is core.String) ? core.int.parse(json["uniqueQualifier"]) : json["uniqueQualifier"];
+    }
+  }
+
+  /** Create JSON Object for ActivityId */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (applicationName != null) {
+      output["applicationName"] = applicationName;
+    }
+    if (customerId != null) {
+      output["customerId"] = customerId;
+    }
+    if (time != null) {
+      output["time"] = time;
+    }
+    if (uniqueQualifier != null) {
+      output["uniqueQualifier"] = uniqueQualifier;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of ActivityId */
+  core.String toString() => JSON.stringify(this.toJson());
+
+}
+
 /** JSON template for a usage report. */
 class UsageReport {
 
@@ -387,10 +361,7 @@ class UsageReport {
       kind = json["kind"];
     }
     if (json.containsKey("parameters")) {
-      parameters = [];
-      json["parameters"].forEach((item) {
-        parameters.add(new UsageReportParameters.fromJson(item));
-      });
+      parameters = json["parameters"].map((parametersItem) => new UsageReportParameters.fromJson(parametersItem)).toList();
     }
   }
 
@@ -408,10 +379,7 @@ class UsageReport {
       output["kind"] = kind;
     }
     if (parameters != null) {
-      output["parameters"] = new core.List();
-      parameters.forEach((item) {
-        output["parameters"].add(item.toJson());
-      });
+      output["parameters"] = parameters.map((parametersItem) => parametersItem.toJson()).toList();
     }
 
     return output;
@@ -504,11 +472,7 @@ class UsageReportParameters {
       datetimeValue = json["datetimeValue"];
     }
     if (json.containsKey("intValue")) {
-      if(json["intValue"] is core.String){
-        intValue = core.int.parse(json["intValue"]);
-      }else{
-        intValue = json["intValue"];
-      }
+      intValue = (json["intValue"] is core.String) ? core.int.parse(json["intValue"]) : json["intValue"];
     }
     if (json.containsKey("name")) {
       name = json["name"];
@@ -570,16 +534,10 @@ class UsageReports {
       nextPageToken = json["nextPageToken"];
     }
     if (json.containsKey("usageReports")) {
-      usageReports = [];
-      json["usageReports"].forEach((item) {
-        usageReports.add(new UsageReport.fromJson(item));
-      });
+      usageReports = json["usageReports"].map((usageReportsItem) => new UsageReport.fromJson(usageReportsItem)).toList();
     }
     if (json.containsKey("warnings")) {
-      warnings = [];
-      json["warnings"].forEach((item) {
-        warnings.add(new UsageReportsWarnings.fromJson(item));
-      });
+      warnings = json["warnings"].map((warningsItem) => new UsageReportsWarnings.fromJson(warningsItem)).toList();
     }
   }
 
@@ -594,16 +552,10 @@ class UsageReports {
       output["nextPageToken"] = nextPageToken;
     }
     if (usageReports != null) {
-      output["usageReports"] = new core.List();
-      usageReports.forEach((item) {
-        output["usageReports"].add(item.toJson());
-      });
+      output["usageReports"] = usageReports.map((usageReportsItem) => usageReportsItem.toJson()).toList();
     }
     if (warnings != null) {
-      output["warnings"] = new core.List();
-      warnings.forEach((item) {
-        output["warnings"].add(item.toJson());
-      });
+      output["warnings"] = warnings.map((warningsItem) => warningsItem.toJson()).toList();
     }
 
     return output;
@@ -631,10 +583,7 @@ class UsageReportsWarnings {
       code = json["code"];
     }
     if (json.containsKey("data")) {
-      data = [];
-      json["data"].forEach((item) {
-        data.add(new UsageReportsWarningsData.fromJson(item));
-      });
+      data = json["data"].map((dataItem) => new UsageReportsWarningsData.fromJson(dataItem)).toList();
     }
     if (json.containsKey("message")) {
       message = json["message"];
@@ -649,10 +598,7 @@ class UsageReportsWarnings {
       output["code"] = code;
     }
     if (data != null) {
-      output["data"] = new core.List();
-      data.forEach((item) {
-        output["data"].add(item.toJson());
-      });
+      output["data"] = data.map((dataItem) => dataItem.toJson()).toList();
     }
     if (message != null) {
       output["message"] = message;
@@ -703,3 +649,16 @@ class UsageReportsWarningsData {
 
 }
 
+core.Map _mapMap(core.Map source, [core.Object convert(core.Object source) = null]) {
+  assert(source != null);
+  var result = new dart_collection.LinkedHashMap();
+  source.forEach((core.String key, value) {
+    assert(key != null);
+    if(convert == null) {
+      result[key] = value;
+    } else {
+      result[key] = convert(value);
+    }
+  });
+  return result;
+}
