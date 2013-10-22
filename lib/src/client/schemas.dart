@@ -3,6 +3,9 @@ part of admin_reports_v1_api;
 /** JSON template for a collection of activites. */
 class Activities {
 
+  /** ETag of the resource. */
+  core.String etag;
+
   /** Each record in read response. */
   core.List<Activity> items;
 
@@ -14,6 +17,9 @@ class Activities {
 
   /** Create new Activities from JSON data */
   Activities.fromJson(core.Map json) {
+    if (json.containsKey("etag")) {
+      etag = json["etag"];
+    }
     if (json.containsKey("items")) {
       items = json["items"].map((itemsItem) => new Activity.fromJson(itemsItem)).toList();
     }
@@ -29,6 +35,9 @@ class Activities {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (etag != null) {
+      output["etag"] = etag;
+    }
     if (items != null) {
       output["items"] = items.map((itemsItem) => itemsItem.toJson()).toList();
     }
@@ -43,7 +52,7 @@ class Activities {
   }
 
   /** Return String representation of Activities */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -52,6 +61,9 @@ class Activity {
 
   /** User doing the action. */
   ActivityActor actor;
+
+  /** ETag of the entry. */
+  core.String etag;
 
   /** Activity events. */
   core.List<ActivityEvents> events;
@@ -72,6 +84,9 @@ class Activity {
   Activity.fromJson(core.Map json) {
     if (json.containsKey("actor")) {
       actor = new ActivityActor.fromJson(json["actor"]);
+    }
+    if (json.containsKey("etag")) {
+      etag = json["etag"];
     }
     if (json.containsKey("events")) {
       events = json["events"].map((eventsItem) => new ActivityEvents.fromJson(eventsItem)).toList();
@@ -97,6 +112,9 @@ class Activity {
     if (actor != null) {
       output["actor"] = actor.toJson();
     }
+    if (etag != null) {
+      output["etag"] = etag;
+    }
     if (events != null) {
       output["events"] = events.map((eventsItem) => eventsItem.toJson()).toList();
     }
@@ -117,7 +135,7 @@ class Activity {
   }
 
   /** Return String representation of Activity */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -173,7 +191,7 @@ class ActivityActor {
   }
 
   /** Return String representation of ActivityActor */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -219,7 +237,7 @@ class ActivityEvents {
   }
 
   /** Return String representation of ActivityEvents */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -274,7 +292,7 @@ class ActivityEventsParameters {
   }
 
   /** Return String representation of ActivityEventsParameters */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -330,7 +348,7 @@ class ActivityId {
   }
 
   /** Return String representation of ActivityId */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -342,6 +360,9 @@ class UsageReport {
 
   /** Information about the type of the item. */
   UsageReportEntity entity;
+
+  /** ETag of the resource. */
+  core.String etag;
 
   /** The kind of object. */
   core.String kind;
@@ -356,6 +377,9 @@ class UsageReport {
     }
     if (json.containsKey("entity")) {
       entity = new UsageReportEntity.fromJson(json["entity"]);
+    }
+    if (json.containsKey("etag")) {
+      etag = json["etag"];
     }
     if (json.containsKey("kind")) {
       kind = json["kind"];
@@ -375,6 +399,9 @@ class UsageReport {
     if (entity != null) {
       output["entity"] = entity.toJson();
     }
+    if (etag != null) {
+      output["etag"] = etag;
+    }
     if (kind != null) {
       output["kind"] = kind;
     }
@@ -386,7 +413,7 @@ class UsageReport {
   }
 
   /** Return String representation of UsageReport */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -442,7 +469,7 @@ class UsageReportEntity {
   }
 
   /** Return String representation of UsageReportEntity */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -456,6 +483,9 @@ class UsageReportParameters {
 
   /** Integral value of the parameter. */
   core.int intValue;
+
+  /** Nested message value of the parameter. */
+  core.List<core.Map<core.String, core.Object>> msgValue;
 
   /** The name of the parameter. */
   core.String name;
@@ -473,6 +503,9 @@ class UsageReportParameters {
     }
     if (json.containsKey("intValue")) {
       intValue = (json["intValue"] is core.String) ? core.int.parse(json["intValue"]) : json["intValue"];
+    }
+    if (json.containsKey("msgValue")) {
+      msgValue = json["msgValue"].map((msgValueItem) => _mapMap(msgValueItem)).toList();
     }
     if (json.containsKey("name")) {
       name = json["name"];
@@ -495,6 +528,9 @@ class UsageReportParameters {
     if (intValue != null) {
       output["intValue"] = intValue;
     }
+    if (msgValue != null) {
+      output["msgValue"] = msgValue.map((msgValueItem) => _mapMap(msgValueItem)).toList();
+    }
     if (name != null) {
       output["name"] = name;
     }
@@ -506,12 +542,15 @@ class UsageReportParameters {
   }
 
   /** Return String representation of UsageReportParameters */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
 /** JSON template for a collection of usage reports. */
 class UsageReports {
+
+  /** ETag of the resource. */
+  core.String etag;
 
   /** The kind of object. */
   core.String kind;
@@ -527,6 +566,9 @@ class UsageReports {
 
   /** Create new UsageReports from JSON data */
   UsageReports.fromJson(core.Map json) {
+    if (json.containsKey("etag")) {
+      etag = json["etag"];
+    }
     if (json.containsKey("kind")) {
       kind = json["kind"];
     }
@@ -545,6 +587,9 @@ class UsageReports {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (etag != null) {
+      output["etag"] = etag;
+    }
     if (kind != null) {
       output["kind"] = kind;
     }
@@ -562,7 +607,7 @@ class UsageReports {
   }
 
   /** Return String representation of UsageReports */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -608,7 +653,7 @@ class UsageReportsWarnings {
   }
 
   /** Return String representation of UsageReportsWarnings */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -645,7 +690,7 @@ class UsageReportsWarningsData {
   }
 
   /** Return String representation of UsageReportsWarningsData */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 

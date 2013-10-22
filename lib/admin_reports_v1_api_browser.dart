@@ -2,7 +2,7 @@ library admin_reports_v1_api.browser;
 
 import "package:google_oauth2_client/google_oauth2_browser.dart" as oauth;
 
-import 'package:google_admin_reports_v1_api/src/cloud_api_browser.dart';
+import 'package:google_admin_reports_v1_api/src/browser_client.dart';
 import "package:google_admin_reports_v1_api/admin_reports_v1_api_client.dart";
 
 /** Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users. */
