@@ -352,6 +352,116 @@ class ActivityId {
 
 }
 
+/** An notification channel used to watch for resource changes. */
+class Channel {
+
+  /** The address where notifications are delivered for this channel. */
+  core.String address;
+
+  /** Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional. */
+  core.int expiration;
+
+  /** A UUID or similar unique string that identifies this channel. */
+  core.String id;
+
+  /** Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string "api#channel". */
+  core.String kind;
+
+  /** Additional parameters controlling delivery channel behavior. Optional. */
+  core.Map<core.String, core.String> params;
+
+  /** A Boolean value to indicate whether payload is wanted. Optional. */
+  core.bool payload;
+
+  /** An opaque ID that identifies the resource being watched on this channel. Stable across different API versions. */
+  core.String resourceId;
+
+  /** A version-specific identifier for the watched resource. */
+  core.String resourceUri;
+
+  /** An arbitrary string delivered to the target address with each notification delivered over this channel. Optional. */
+  core.String token;
+
+  /** The type of delivery mechanism used for this channel. */
+  core.String type;
+
+  /** Create new Channel from JSON data */
+  Channel.fromJson(core.Map json) {
+    if (json.containsKey("address")) {
+      address = json["address"];
+    }
+    if (json.containsKey("expiration")) {
+      expiration = (json["expiration"] is core.String) ? core.int.parse(json["expiration"]) : json["expiration"];
+    }
+    if (json.containsKey("id")) {
+      id = json["id"];
+    }
+    if (json.containsKey("kind")) {
+      kind = json["kind"];
+    }
+    if (json.containsKey("params")) {
+      params = _mapMap(json["params"]);
+    }
+    if (json.containsKey("payload")) {
+      payload = json["payload"];
+    }
+    if (json.containsKey("resourceId")) {
+      resourceId = json["resourceId"];
+    }
+    if (json.containsKey("resourceUri")) {
+      resourceUri = json["resourceUri"];
+    }
+    if (json.containsKey("token")) {
+      token = json["token"];
+    }
+    if (json.containsKey("type")) {
+      type = json["type"];
+    }
+  }
+
+  /** Create JSON Object for Channel */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (address != null) {
+      output["address"] = address;
+    }
+    if (expiration != null) {
+      output["expiration"] = expiration;
+    }
+    if (id != null) {
+      output["id"] = id;
+    }
+    if (kind != null) {
+      output["kind"] = kind;
+    }
+    if (params != null) {
+      output["params"] = _mapMap(params);
+    }
+    if (payload != null) {
+      output["payload"] = payload;
+    }
+    if (resourceId != null) {
+      output["resourceId"] = resourceId;
+    }
+    if (resourceUri != null) {
+      output["resourceUri"] = resourceUri;
+    }
+    if (token != null) {
+      output["token"] = token;
+    }
+    if (type != null) {
+      output["type"] = type;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of Channel */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
 /** JSON template for a usage report. */
 class UsageReport {
 

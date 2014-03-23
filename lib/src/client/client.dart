@@ -9,6 +9,7 @@ abstract class Client extends ClientBase {
   //
 
   ActivitiesResource_ get activities => new ActivitiesResource_(this);
+  ChannelsResource_ get channels => new ChannelsResource_(this);
   CustomerUsageReportsResource_ get customerUsageReports => new CustomerUsageReportsResource_(this);
   UserUsageReportResource_ get userUsageReport => new UserUsageReportResource_(this);
 

@@ -16,6 +16,8 @@ class ActivitiesResource_ {
    *
    * [actorIpAddress] - IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.
    *
+   * [customerId] - Represents the customer for which the data is to be fetched.
+   *
    * [endTime] - Return events which occured at or before this time.
    *
    * [eventName] - Name of the event being queried.
@@ -32,7 +34,7 @@ class ActivitiesResource_ {
    *
    * [optParams] - Additional query parameters
    */
-  async.Future<Activities> list(core.String userKey, core.String applicationName, {core.String actorIpAddress, core.String endTime, core.String eventName, core.String filters, core.int maxResults, core.String pageToken, core.String startTime, core.Map optParams}) {
+  async.Future<Activities> list(core.String userKey, core.String applicationName, {core.String actorIpAddress, core.String customerId, core.String endTime, core.String eventName, core.String filters, core.int maxResults, core.String pageToken, core.String startTime, core.Map optParams}) {
     var url = "activity/users/{userKey}/applications/{applicationName}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -41,6 +43,7 @@ class ActivitiesResource_ {
     if (actorIpAddress != null) queryParams["actorIpAddress"] = actorIpAddress;
     if (applicationName == null) paramErrors.add("applicationName is required");
     if (applicationName != null) urlParams["applicationName"] = applicationName;
+    if (customerId != null) queryParams["customerId"] = customerId;
     if (endTime != null) queryParams["endTime"] = endTime;
     if (eventName != null) queryParams["eventName"] = eventName;
     if (filters != null) queryParams["filters"] = filters;
@@ -66,6 +69,109 @@ class ActivitiesResource_ {
     return response
       .then((data) => new Activities.fromJson(data));
   }
+
+  /**
+   * Push changes to activities
+   *
+   * [request] - Channel to send in this request
+   *
+   * [userKey] - Represents the profile id or the user email for which the data should be filtered. When 'all' is specified as the userKey, it returns usageReports for all users.
+   *
+   * [applicationName] - Application name for which the events are to be retrieved.
+   *
+   * [actorIpAddress] - IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.
+   *
+   * [customerId] - Represents the customer for which the data is to be fetched.
+   *
+   * [endTime] - Return events which occured at or before this time.
+   *
+   * [eventName] - Name of the event being queried.
+   *
+   * [filters] - Event parameters in the form [parameter1 name][operator][parameter1 value],[parameter2 name][operator][parameter2 value],...
+   *
+   * [maxResults] - Number of activity records to be shown in each page.
+   *   Minimum: 1
+   *   Maximum: 1000
+   *
+   * [pageToken] - Token to specify next page.
+   *
+   * [startTime] - Return events which occured at or after this time.
+   *
+   * [optParams] - Additional query parameters
+   */
+  async.Future<Channel> watch(Channel request, core.String userKey, core.String applicationName, {core.String actorIpAddress, core.String customerId, core.String endTime, core.String eventName, core.String filters, core.int maxResults, core.String pageToken, core.String startTime, core.Map optParams}) {
+    var url = "activity/users/{userKey}/applications/{applicationName}/watch";
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
+
+    var paramErrors = new core.List();
+    if (actorIpAddress != null) queryParams["actorIpAddress"] = actorIpAddress;
+    if (applicationName == null) paramErrors.add("applicationName is required");
+    if (applicationName != null) urlParams["applicationName"] = applicationName;
+    if (customerId != null) queryParams["customerId"] = customerId;
+    if (endTime != null) queryParams["endTime"] = endTime;
+    if (eventName != null) queryParams["eventName"] = eventName;
+    if (filters != null) queryParams["filters"] = filters;
+    if (maxResults != null) queryParams["maxResults"] = maxResults;
+    if (pageToken != null) queryParams["pageToken"] = pageToken;
+    if (startTime != null) queryParams["startTime"] = startTime;
+    if (userKey == null) paramErrors.add("userKey is required");
+    if (userKey != null) urlParams["userKey"] = userKey;
+    if (optParams != null) {
+      optParams.forEach((key, value) {
+        if (value != null && queryParams[key] == null) {
+          queryParams[key] = value;
+        }
+      });
+    }
+
+    if (!paramErrors.isEmpty) {
+      throw new core.ArgumentError(paramErrors.join(" / "));
+    }
+
+    var response;
+    response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
+    return response
+      .then((data) => new Channel.fromJson(data));
+  }
+}
+
+class ChannelsResource_ {
+
+  final Client _client;
+
+  ChannelsResource_(Client client) :
+      _client = client;
+
+  /**
+   * Stop watching resources through this channel
+   *
+   * [request] - Channel to send in this request
+   *
+   * [optParams] - Additional query parameters
+   */
+  async.Future<core.Map> stop(Channel request, {core.Map optParams}) {
+    var url = "/admin/reports_v1/channels/stop";
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
+
+    var paramErrors = new core.List();
+    if (optParams != null) {
+      optParams.forEach((key, value) {
+        if (value != null && queryParams[key] == null) {
+          queryParams[key] = value;
+        }
+      });
+    }
+
+    if (!paramErrors.isEmpty) {
+      throw new core.ArgumentError(paramErrors.join(" / "));
+    }
+
+    var response;
+    response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
+    return response;
+  }
 }
 
 class CustomerUsageReportsResource_ {
@@ -80,18 +186,21 @@ class CustomerUsageReportsResource_ {
    *
    * [date] - Represents the date in yyyy-mm-dd format for which the data is to be fetched.
    *
+   * [customerId] - Represents the customer for which the data is to be fetched.
+   *
    * [pageToken] - Token to specify next page.
    *
    * [parameters] - Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.
    *
    * [optParams] - Additional query parameters
    */
-  async.Future<UsageReports> get(core.String date, {core.String pageToken, core.String parameters, core.Map optParams}) {
+  async.Future<UsageReports> get(core.String date, {core.String customerId, core.String pageToken, core.String parameters, core.Map optParams}) {
     var url = "usage/dates/{date}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
 
     var paramErrors = new core.List();
+    if (customerId != null) queryParams["customerId"] = customerId;
     if (date == null) paramErrors.add("date is required");
     if (date != null) urlParams["date"] = date;
     if (pageToken != null) queryParams["pageToken"] = pageToken;
@@ -129,6 +238,8 @@ class UserUsageReportResource_ {
    *
    * [date] - Represents the date in yyyy-mm-dd format for which the data is to be fetched.
    *
+   * [customerId] - Represents the customer for which the data is to be fetched.
+   *
    * [filters] - Represents the set of filters including parameter operator value.
    *
    * [maxResults] - Maximum number of results to return. Maximum allowed is 1000
@@ -140,12 +251,13 @@ class UserUsageReportResource_ {
    *
    * [optParams] - Additional query parameters
    */
-  async.Future<UsageReports> get(core.String userKey, core.String date, {core.String filters, core.int maxResults, core.String pageToken, core.String parameters, core.Map optParams}) {
+  async.Future<UsageReports> get(core.String userKey, core.String date, {core.String customerId, core.String filters, core.int maxResults, core.String pageToken, core.String parameters, core.Map optParams}) {
     var url = "usage/users/{userKey}/dates/{date}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
 
     var paramErrors = new core.List();
+    if (customerId != null) queryParams["customerId"] = customerId;
     if (date == null) paramErrors.add("date is required");
     if (date != null) urlParams["date"] = date;
     if (filters != null) queryParams["filters"] = filters;
