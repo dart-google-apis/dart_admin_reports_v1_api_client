@@ -14,7 +14,7 @@ Adding dependency to pubspec.yaml
 
 ```
   dependencies:
-    google_admin_reports_v1_api: '>=0.4.6'
+    google_admin_reports_v1_api: '>=0.4.7'
 ```
 
 For web applications:
