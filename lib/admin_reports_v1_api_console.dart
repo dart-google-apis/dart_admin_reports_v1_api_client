@@ -7,6 +7,7 @@ import 'package:google_admin_reports_v1_api/src/console_client.dart';
 import "package:google_admin_reports_v1_api/admin_reports_v1_api_client.dart";
 
 /** Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users. */
+@deprecated
 class Admin extends Client with ConsoleClient {
 
   /** OAuth Scope2: View audit reports of Google Apps for your domain */
